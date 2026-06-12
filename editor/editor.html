@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J'Snaps Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="editor.css" />
+</head>
+<body>
+  <!-- ── Top Toolbar ─────────────────────────────────────────────────────── -->
+  <header id="toolbar">
+    <div class="toolbar-left">
+      <div class="brand">
+        <div class="brand-icon">📸</div>
+        <span class="brand-name">J'Snaps</span>
+      </div>
+      <div class="divider"></div>
+
+      <!-- Tool Buttons -->
+      <div class="tool-group" id="toolGroup">
+        <button class="tool-btn active" id="tool-pointer" data-tool="pointer" title="Pointer (V)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-7 1-3 6z"/></svg>
+          <span>Pointer</span>
+        </button>
+        <button class="tool-btn" id="tool-pen" data-tool="pen" title="Pen (P)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span>Pen</span>
+        </button>
+        <button class="tool-btn" id="tool-line" data-tool="line" title="Line (L)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/></svg>
+          <span>Line</span>
+        </button>
+        <button class="tool-btn" id="tool-arrow" data-tool="arrow" title="Arrow (A)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="9 5 19 5 19 15"/></svg>
+          <span>Arrow</span>
+        </button>
+        <button class="tool-btn" id="tool-rect" data-tool="rect" title="Rectangle (R)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          <span>Rect</span>
+        </button>
+        <button class="tool-btn" id="tool-ellipse" data-tool="ellipse" title="Ellipse (E)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="10" ry="6"/></svg>
+          <span>Ellipse</span>
+        </button>
+        <button class="tool-btn" id="tool-text" data-tool="text" title="Text (T)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          <span>Text</span>
+        </button>
+        <button class="tool-btn step-btn" id="tool-step" data-tool="step" title="Step Numbers (S)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><text x="12" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">1</text></svg>
+          <span>Steps</span>
+        </button>
+        <button class="tool-btn" id="tool-eraser" data-tool="eraser" title="Eraser (X)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20H7L3 16l11-11 6 6-3.5 3.5"/><path d="M6.5 17.5l4-4"/></svg>
+          <span>Eraser</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="toolbar-right">
+      <!-- Style Controls -->
+      <div class="style-group">
+        <label class="style-label">Color</label>
+        <div class="color-swatches" id="colorSwatches">
+          <button class="swatch active" data-color="#EF4444" style="background:#EF4444" title="Red"></button>
+          <button class="swatch" data-color="#F97316" style="background:#F97316" title="Orange"></button>
+          <button class="swatch" data-color="#EAB308" style="background:#EAB308" title="Yellow"></button>
+          <button class="swatch" data-color="#22C55E" style="background:#22C55E" title="Green"></button>
+          <button class="swatch" data-color="#4F8EF7" style="background:#4F8EF7" title="Blue"></button>
+          <button class="swatch" data-color="#A855F7" style="background:#A855F7" title="Purple"></button>
+          <button class="swatch" data-color="#FFFFFF" style="background:#FFFFFF;border-color:#555" title="White"></button>
+          <button class="swatch" data-color="#000000" style="background:#000000" title="Black"></button>
+          <input type="color" id="customColor" value="#EF4444" title="Custom color" />
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="style-group">
+        <label class="style-label">Size</label>
+        <div class="size-controls">
+          <button class="size-btn active" data-size="2" title="Thin">
+            <div class="size-line" style="height:2px"></div>
+          </button>
+          <button class="size-btn" data-size="4" title="Medium">
+            <div class="size-line" style="height:4px"></div>
+          </button>
+          <button class="size-btn" data-size="8" title="Thick">
+            <div class="size-line" style="height:8px"></div>
+          </button>
+          <button class="size-btn" data-size="16" title="Extra thick">
+            <div class="size-line" style="height:12px"></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Step counter badge -->
+      <div class="step-counter-wrap" id="stepCounterWrap" style="display:none">
+        <label class="style-label">Step #</label>
+        <span class="step-badge" id="stepBadge">1</span>
+        <button class="reset-btn" id="resetSteps" title="Reset step counter">↺</button>
+        <div class="divider"></div>
+      </div>
+
+      <!-- History -->
+      <button class="icon-btn" id="btnUndo" title="Undo (Ctrl+Z)" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 00-4-4H4"/></svg>
+      </button>
+      <button class="icon-btn" id="btnRedo" title="Redo (Ctrl+Y)" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 014-4h12"/></svg>
+      </button>
+
+      <div class="divider"></div>
+
+      <!-- Export -->
+      <button class="export-btn secondary" id="btnCopy" title="Copy to clipboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+      <button class="export-btn primary" id="btnDownload" title="Download PNG">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </button>
+
+      <div class="divider"></div>
+
+      <button class="close-btn" id="btnClose" title="Close editor (ESC ESC)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Canvas Area ─────────────────────────────────────────────────────── -->
+  <main id="canvasWrap">
+    <div id="canvasContainer">
+      <canvas id="baseCanvas"></canvas>
+      <canvas id="drawCanvas"></canvas>
+      <!-- Text input overlay -->
+      <div id="textInputWrap" style="display:none; position:absolute;">
+        <textarea id="textInput" placeholder="Type here..." rows="1"></textarea>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Toast Notification ──────────────────────────────────────────────── -->
+  <div id="toast"></div>
+
+  <!-- ── Loading Screen ──────────────────────────────────────────────────── -->
+  <div id="loadingScreen">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <p>Loading capture...</p>
+    </div>
+  </div>
+
+  <script src="editor.js"></script>
+</body>
+</html>
