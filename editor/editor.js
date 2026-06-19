@@ -19,6 +19,7 @@ const state = {
   textActive: false,
   textX: 0, textY: 0,
   pendingShape: null,  // For live preview
+  blurRadius: 16,
 };
 
 // ── DOM References ────────────────────────────────────────────────────────────
@@ -36,6 +37,9 @@ const toast = document.getElementById('toast');
 const loadingScreen = document.getElementById('loadingScreen');
 const btnUndo = document.getElementById('btnUndo');
 const btnRedo = document.getElementById('btnRedo');
+const blurIntensityWrap = document.getElementById('blurIntensityWrap');
+const blurSlider = document.getElementById('blurSlider');
+const blurValue = document.getElementById('blurValue');
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
@@ -207,6 +211,46 @@ function drawTextOnCanvas(ctx, text, x, y) {
   ctx.restore();
 }
 
+// ── Blur Tool ─────────────────────────────────────────────────────────────────
+function applyBlur(x, y, w, h) {
+  const px = Math.round(x), py = Math.round(y);
+  const pw = Math.max(2, Math.round(w)), ph = Math.max(2, Math.round(h));
+  const pad = state.blurRadius * 2;
+
+  // Build composite of base + draw layers
+  const composite = document.createElement('canvas');
+  composite.width  = baseCanvas.width;
+  composite.height = baseCanvas.height;
+  const compCtx = composite.getContext('2d');
+  compCtx.drawImage(baseCanvas, 0, 0);
+  compCtx.drawImage(drawCanvas, 0, 0);
+
+  // Extract region WITH padding so blur edges don't feather into transparency
+  const srcX = Math.max(0, px - pad);
+  const srcY = Math.max(0, py - pad);
+  const srcW = Math.min(composite.width  - srcX, pw + pad * 2);
+  const srcH = Math.min(composite.height - srcY, ph + pad * 2);
+  const offX = px - srcX;
+  const offY = py - srcY;
+
+  const region = document.createElement('canvas');
+  region.width  = srcW;
+  region.height = srcH;
+  region.getContext('2d').drawImage(composite, srcX, srcY, srcW, srcH, 0, 0, srcW, srcH);
+
+  // Apply Gaussian blur via canvas filter on a temp canvas
+  const blurred = document.createElement('canvas');
+  blurred.width  = srcW;
+  blurred.height = srcH;
+  const blurCtx = blurred.getContext('2d');
+  blurCtx.filter = `blur(${state.blurRadius}px)`;
+  blurCtx.drawImage(region, 0, 0);
+  blurCtx.filter = 'none';
+
+  // Stamp only the target region (crop out padding) onto the draw canvas
+  drawCtx.drawImage(blurred, offX, offY, pw, ph, px, py, pw, ph);
+}
+
 // ── Live Preview ──────────────────────────────────────────────────────────────
 let previewSnapshot = null;
 
@@ -298,6 +342,20 @@ drawCanvas.addEventListener('mousemove', (e) => {
     case 'ellipse':
       drawEllipse(drawCtx, state.startX, state.startY, dx, dy);
       break;
+    case 'blur': {
+      // Dashed cyan preview rectangle
+      drawCtx.save();
+      drawCtx.strokeStyle = '#06B6D4';
+      drawCtx.lineWidth = 2;
+      drawCtx.setLineDash([6, 4]);
+      drawCtx.strokeRect(state.startX, state.startY, dx, dy);
+      drawCtx.setLineDash([]);
+      // Frosted fill tint
+      drawCtx.fillStyle = 'rgba(6,182,212,0.08)';
+      drawCtx.fillRect(state.startX, state.startY, dx, dy);
+      drawCtx.restore();
+      break;
+    }
   }
 });
 
@@ -307,6 +365,18 @@ drawCanvas.addEventListener('mouseup', (e) => {
 
   if (state.tool === 'pen' || state.tool === 'eraser') {
     drawCtx.globalCompositeOperation = 'source-over';
+  }
+
+  if (state.tool === 'blur') {
+    const { x, y } = getCanvasPos(e);
+    const rx = Math.min(x, state.startX);
+    const ry = Math.min(y, state.startY);
+    const rw = Math.abs(x - state.startX);
+    const rh = Math.abs(y - state.startY);
+    restorePreview(); // Remove dashed preview outline
+    if (rw >= 10 && rh >= 10) {
+      applyBlur(rx, ry, rw, rh);
+    }
   }
 
   previewSnapshot = null;
@@ -397,12 +467,15 @@ function selectTool(tool) {
     ellipse: 'crosshair',
     text: 'text',
     step: 'pointer',
-    eraser: 'eraser'
+    eraser: 'eraser',
+    blur: 'crosshair'
   };
   canvasContainer.dataset.cursor = cursorMap[tool] || 'crosshair';
 
   // Show/hide step counter
   stepCounterWrap.style.display = tool === 'step' ? 'flex' : 'none';
+  // Show/hide blur intensity slider
+  blurIntensityWrap.style.display = tool === 'blur' ? 'flex' : 'none';
 }
 
 // ── Color Swatches ─────────────────────────────────────────────────────────────
@@ -442,6 +515,12 @@ document.getElementById('resetSteps').addEventListener('click', () => {
   state.stepCounter = 1;
   updateStepBadge();
   showToast('Step counter reset to 1', 'success');
+});
+
+// ── Blur Slider ───────────────────────────────────────────────────────────────
+blurSlider.addEventListener('input', () => {
+  state.blurRadius = parseInt(blurSlider.value);
+  blurValue.textContent = blurSlider.value;
 });
 
 // ── Undo / Redo ───────────────────────────────────────────────────────────────
@@ -494,7 +573,7 @@ document.addEventListener('keydown', (e) => {
 
   // Tool shortcuts
   if (!state.textActive && !e.ctrlKey) {
-    const shortcuts = { v: 'pointer', p: 'pen', l: 'line', a: 'arrow', r: 'rect', e: 'ellipse', t: 'text', s: 'step', x: 'eraser' };
+    const shortcuts = { v: 'pointer', p: 'pen', l: 'line', a: 'arrow', r: 'rect', e: 'ellipse', t: 'text', s: 'step', x: 'eraser', b: 'blur' };
     if (shortcuts[e.key]) selectTool(shortcuts[e.key]);
   }
 });

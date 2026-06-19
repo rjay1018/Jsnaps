@@ -134,6 +134,11 @@ html, body {
   color: #EF4444;
   box-shadow: 0 0 0 1px rgba(239,68,68,0.4);
 }
+.tool-btn.blur-btn.active {
+  background: rgba(6,182,212,0.18);
+  color: #06B6D4;
+  box-shadow: 0 0 0 1px rgba(6,182,212,0.45);
+}
 
 /* Style Group */
 .style-group {
@@ -245,6 +250,28 @@ html, body {
   transition: all var(--transition);
 }
 .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Blur Intensity Slider */
+.blur-intensity-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#blurSlider {
+  width: 72px;
+  height: 4px;
+  accent-color: #06B6D4;
+  cursor: pointer;
+  border-radius: 999px;
+}
+.blur-value {
+  font-size: 11px;
+  color: #06B6D4;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: right;
+  letter-spacing: -0.3px;
+}
 
 /* Icon Buttons (undo/redo) */
 .icon-btn {
@@ -450,3 +477,4 @@ html, body {
 [data-cursor="text"] #drawCanvas { cursor: text; }
 [data-cursor="pointer"] #drawCanvas { cursor: pointer; }
 [data-cursor="eraser"] #drawCanvas { cursor: cell; }
+[data-cursor="blur"] #drawCanvas { cursor: crosshair; }
