@@ -6,11 +6,52 @@ J'Snaps brings the seamless "Lightshot" experience to your desktop. With a singl
 
 ## Screenshots
 
-### Editor — Blur / Redact Tool in Action
-![Blur Tool Demo](docs/screenshots/blur_tool_demo.png)
+### 1. 🎯 Screen Freeze & Area Selection
+> Press `Ctrl+Shift+S` — the screen freezes instantly. Drag to select your capture area with pixel-precision.
 
-### Toolbar — Blur Tool Active with Intensity Slider
-![Toolbar Close-up](docs/screenshots/blur_toolbar.png)
+![Screen Freeze & Selection](docs/screenshots/01_screen_freeze.png)
+
+---
+
+### 2. 🖼️ Full Editor Overview
+> A powerful, fully-featured annotation canvas with all tools ready to use.
+
+![Editor Overview](docs/screenshots/02_editor_overview.png)
+
+---
+
+### 3. ✏️ Pen, Line & Arrow Tools
+> Freehand drawing, straight lines, and arrows with filled arrowheads for pointing out UI elements.
+
+![Pen Line Arrow](docs/screenshots/03_pen_line_arrow.png)
+
+---
+
+### 4. 🔲 Rectangle & Ellipse Shapes
+> Highlight, frame, or circle any part of your screenshot with clean rounded shapes.
+
+![Shapes](docs/screenshots/04_shapes.png)
+
+---
+
+### 5. 🔤 Text Annotations & Step Counters
+> Add text labels anywhere on the image. Use numbered step markers to guide users through a workflow.
+
+![Text and Steps](docs/screenshots/05_text_steps.png)
+
+---
+
+### 6. 🌫️ Blur / Redact Tool
+> Drag over any region to instantly blur sensitive information — passwords, emails, personal data.
+
+![Blur Redact](docs/screenshots/06_blur_redact.png)
+
+---
+
+### 7. 📋 Copy & Download Export
+> One-click copy to clipboard or download as a PNG — ready to paste into Slack, Notion, Jira, or anywhere.
+
+![Export](docs/screenshots/07_export.png)
 
 ## Features
 - 🚀 **Global Hotkey:** Press `Ctrl+Shift+S` anywhere on your computer to instantly freeze the screen.
