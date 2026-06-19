@@ -4,6 +4,14 @@ A lightning-fast, native desktop screenshot and annotation tool built with Elect
 
 J'Snaps brings the seamless "Lightshot" experience to your desktop. With a single global hotkey, you can silently freeze your entire screen, select an area, and instantly open a powerful, beautifully designed image editor to annotate and share your snapshot.
 
+## Screenshots
+
+### Editor — Blur / Redact Tool in Action
+![Blur Tool Demo](docs/screenshots/blur_tool_demo.png)
+
+### Toolbar — Blur Tool Active with Intensity Slider
+![Toolbar Close-up](docs/screenshots/blur_toolbar.png)
+
 ## Features
 - 🚀 **Global Hotkey:** Press `Ctrl+Shift+S` anywhere on your computer to instantly freeze the screen.
 - 🤫 **Silent Capture:** Native desktop screenshot integration without any browser prompts or pop-ups.
@@ -11,6 +19,7 @@ J'Snaps brings the seamless "Lightshot" experience to your desktop. With a singl
   - Pen, Line, Arrow, Rectangle, and Ellipse tools.
   - Text annotations.
   - Step counter markers.
+  - 🌫️ **Blur / Redact tool** — drag over any region to blur sensitive info (passwords, emails, etc.). Adjustable intensity slider (4–40px). Shortcut: `B`.
   - Full Undo/Redo history support.
 - 📋 **Seamless Export:** Copy directly to your clipboard or download as a PNG.
 
