@@ -8,4 +8,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Senders
   closeOverlay: () => ipcRenderer.send('CLOSE_OVERLAY'),
   openEditor: (data) => ipcRenderer.send('OPEN_EDITOR', data),
+  shareImage: (dataUrl) => ipcRenderer.invoke('SHARE_IMAGE', dataUrl),
+  saveGdriveConfig: (cfg) => ipcRenderer.send('SAVE_GDRIVE_CONFIG', cfg),
 });

@@ -1,5 +1,6 @@
-const { app, globalShortcut, BrowserWindow, desktopCapturer, screen, ipcMain, Tray, Menu, nativeImage } = require('electron');
+const { app, globalShortcut, BrowserWindow, desktopCapturer, screen, ipcMain, Tray, Menu, nativeImage, clipboard, dialog } = require('electron');
 const path = require('path');
+const { share, settings, signInGdrive, signOutGdrive } = require('./share');
 
 let overlayWindow = null;
 let tray = null;
@@ -36,13 +37,56 @@ function setupTray() {
   const iconPath = path.join(__dirname, 'icon.png');
   const icon = nativeImage.createFromPath(iconPath).resize({ width: 24, height: 24 });
   tray = new Tray(icon);
+  tray.setToolTip("J'Snaps");
+  refreshTrayMenu();
+}
+
+function refreshTrayMenu() {
+  const host = settings.get().host;
   const contextMenu = Menu.buildFromTemplate([
     { label: "J'Snaps Running", enabled: false },
     { type: 'separator' },
+    {
+      label: 'Share host',
+      submenu: [
+        { label: 'Catbox (public, no setup)', type: 'radio', checked: host === 'catbox', click: () => { settings.set({ host: 'catbox' }); refreshTrayMenu(); } },
+        { label: 'Google Drive', type: 'radio', checked: host === 'gdrive', click: () => { settings.set({ host: 'gdrive' }); refreshTrayMenu(); } },
+      ],
+    },
+    { label: 'Sign in with Google Drive', click: async () => {
+        try {
+          settings.set({ host: 'gdrive' });
+          await signInGdrive();
+          dialog.showMessageBox({
+            type: 'info',
+            message: 'Signed in to Google Drive',
+            detail: 'Created "JSnaps" folder in your Google Drive. All shared screenshots will be saved there.'
+          });
+        } catch (err) {
+          dialog.showErrorBox('Google sign-in failed', err.message);
+        }
+        refreshTrayMenu();
+      } },
+    { label: 'Sign out of Google Drive', click: async () => {
+        await signOutGdrive();
+        dialog.showMessageBox({ type: 'info', message: 'Signed out of Google Drive' });
+      } },
+    { label: 'Advanced: use my own credentials…', click: openGdriveSetup },
+    { type: 'separator' },
     { label: 'Quit', click: () => { app.quit(); } }
   ]);
-  tray.setToolTip("J'Snaps");
   tray.setContextMenu(contextMenu);
+}
+
+let gdriveSetupWindow = null;
+function openGdriveSetup() {
+  if (gdriveSetupWindow) { gdriveSetupWindow.focus(); return; }
+  gdriveSetupWindow = new BrowserWindow({
+    width: 440, height: 360, autoHideMenuBar: true, resizable: false,
+    webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false }
+  });
+  gdriveSetupWindow.loadFile(path.join(__dirname, 'gdrive-setup.html'));
+  gdriveSetupWindow.on('closed', () => { gdriveSetupWindow = null; });
 }
 
 function registerShortcut() {
@@ -146,4 +190,33 @@ ipcMain.on('OPEN_EDITOR', (event, data) => {
 
 ipcMain.handle('GET_EDITOR_DATA', () => {
   return pendingEditorData;
+});
+
+ipcMain.on('SAVE_GDRIVE_CONFIG', (event, cfg) => {
+  settings.set({ gdriveClientId: cfg.clientId, gdriveClientSecret: cfg.clientSecret, gdriveRefreshToken: null, host: 'gdrive' });
+  if (gdriveSetupWindow) gdriveSetupWindow.close();
+  refreshTrayMenu();
+});
+
+ipcMain.handle('SHARE_IMAGE', async (event, dataUrl) => {
+  try {
+    const s = settings.get();
+    if (s.host === 'catbox' && !s.catboxNoticeAccepted) {
+      const { response } = await dialog.showMessageBox({
+        type: 'info',
+        buttons: ['Upload', 'Cancel'],
+        defaultId: 1,
+        message: 'Catbox links are public',
+        detail: 'Anyone with the link can view this image. Use the Blur tool on sensitive info first, or switch to Google Drive from the tray menu.',
+      });
+      if (response !== 0) return { ok: false, error: 'Upload cancelled' };
+      settings.set({ catboxNoticeAccepted: true });
+    }
+    const buffer = Buffer.from(dataUrl.split(',')[1], 'base64');
+    const url = await share(buffer);
+    clipboard.writeText(url);
+    return { ok: true, url };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
 });

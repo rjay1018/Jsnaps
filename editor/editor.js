@@ -544,6 +544,13 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
+  // Ctrl+L — upload and copy share link
+  if (ctrl && e.key === 'l' && !state.textActive) {
+    e.preventDefault();
+    document.getElementById('btnShare').click();
+    return;
+  }
+
   // ESC key handling
   if (e.key === 'Escape') {
     // If text tool is active, ESC cancels the text input (handled in textInput listener)
@@ -615,6 +622,25 @@ document.getElementById('btnCopy').addEventListener('click', async () => {
   } catch (err) {
     showToast('❌ Failed to copy', 'error');
     console.error(err);
+  }
+});
+
+const btnShare = document.getElementById('btnShare');
+btnShare.addEventListener('click', async () => {
+  if (btnShare.disabled) return;
+  if (state.textActive) commitText();
+  btnShare.disabled = true;
+  btnShare.classList.add('loading');
+  try {
+    const res = await window.electronAPI.shareImage(getFlattenedCanvas().toDataURL('image/png'));
+    if (res.ok) showToast('🔗 Link copied to clipboard!', 'success');
+    else showToast('❌ ' + res.error, 'error');
+  } catch (err) {
+    showToast('❌ Failed to share', 'error');
+    console.error(err);
+  } finally {
+    btnShare.disabled = false;
+    btnShare.classList.remove('loading');
   }
 });
 

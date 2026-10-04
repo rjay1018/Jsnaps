@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Set up Google Drive</title>
+  <style>
+    body { font-family: Inter, system-ui, sans-serif; background:#12141c; color:#e6e8ef; padding:20px; }
+    label { display:block; margin:12px 0 4px; font-size:13px; color:#9aa0b4; }
+    input { width:100%; box-sizing:border-box; padding:8px; border-radius:6px; border:1px solid #2a2e3d; background:#1b1e2b; color:#fff; }
+    button { margin-top:16px; padding:8px 16px; border:0; border-radius:6px; background:#4F8EF7; color:#fff; cursor:pointer; }
+    small { color:#9aa0b4; }
+  </style>
+</head>
+<body>
+  <h3>Google Drive setup</h3>
+  <small>Create an OAuth "Desktop app" client in Google Cloud Console (Drive API enabled), then paste its credentials. See README.</small>
+  <label for="cid">Client ID</label><input id="cid" />
+  <label for="sec">Client secret</label><input id="sec" type="password" />
+  <button id="save">Save</button>
+  <script>
+    document.getElementById('save').addEventListener('click', () => {
+      window.electronAPI.saveGdriveConfig({
+        clientId: document.getElementById('cid').value.trim(),
+        clientSecret: document.getElementById('sec').value.trim(),
+      });
+    });
+  </script>
+</body>
+</html>

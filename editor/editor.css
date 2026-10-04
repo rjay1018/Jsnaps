@@ -478,3 +478,7 @@ html, body {
 [data-cursor="pointer"] #drawCanvas { cursor: pointer; }
 [data-cursor="eraser"] #drawCanvas { cursor: cell; }
 [data-cursor="blur"] #drawCanvas { cursor: crosshair; }
+
+.export-btn.loading { opacity: 0.6; pointer-events: none; }
+.export-btn.loading svg { animation: jsnaps-spin 1s linear infinite; }
+@keyframes jsnaps-spin { to { transform: rotate(360deg); } }
