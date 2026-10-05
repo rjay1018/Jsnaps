@@ -1,6 +1,7 @@
 const { app, globalShortcut, BrowserWindow, desktopCapturer, screen, ipcMain, Tray, Menu, nativeImage, clipboard, dialog } = require('electron');
 const path = require('path');
 const { share, settings, signInGdrive, signOutGdrive } = require('./share');
+const { calculateEditorWindowBounds } = require('./window-utils');
 
 let overlayWindow = null;
 let tray = null;
@@ -173,10 +174,21 @@ ipcMain.on('OPEN_EDITOR', (event, data) => {
 
   pendingEditorData = data;
 
+  const display = (data && data.rect)
+    ? screen.getDisplayNearestPoint({ x: data.rect.x, y: data.rect.y })
+    : screen.getPrimaryDisplay();
+  const bounds = calculateEditorWindowBounds({
+    rect: data ? data.rect : null,
+    workArea: display.workArea,
+  });
+
   // Open the Editor window
   const editorWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: bounds.width,
+    height: bounds.height,
+    minWidth: bounds.minWidth,
+    minHeight: bounds.minHeight,
+    center: bounds.center,
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
