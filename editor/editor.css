@@ -42,6 +42,23 @@ html, body {
   gap: 8px;
   z-index: 100;
   box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+#toolbar::-webkit-scrollbar {
+  height: 3px;
+}
+
+#toolbar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+}
+
+.toolbar-left, .toolbar-right, .brand, .tool-group, .style-group, .export-btn, .icon-btn, .close-btn {
+  flex-shrink: 0;
 }
 
 .toolbar-left, .toolbar-right {
@@ -482,3 +499,38 @@ html, body {
 .export-btn.loading { opacity: 0.6; pointer-events: none; }
 .export-btn.loading svg { animation: jsnaps-spin 1s linear infinite; }
 @keyframes jsnaps-spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive Toolbar Breakpoints ─────────────────────────────────────────── */
+@media (max-width: 1360px) {
+  .tool-btn span {
+    display: none;
+  }
+  .tool-btn {
+    padding: 6px 8px;
+  }
+  .tool-group {
+    padding: 3px;
+    gap: 1px;
+  }
+  .color-swatches {
+    gap: 3px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .brand-name {
+    display: none;
+  }
+  .export-btn span {
+    display: none;
+  }
+  .export-btn {
+    padding: 6px 10px;
+  }
+  .divider {
+    margin: 0 2px;
+  }
+  .style-label {
+    display: none;
+  }
+}
