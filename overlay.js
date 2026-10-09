@@ -70,7 +70,7 @@
     tooltip = document.createElement('div');
     tooltip.id = 'jsnaps-tooltip';
     tooltip.innerHTML = `
-      <span class="jt-icon">📸</span>
+      <img class="jt-icon" src="icon.png" alt="J'Snaps" />
       <span class="jt-text">Drag to select area</span>
       <span class="jt-divider"></span>
       <span class="jt-key">Enter</span><span class="jt-label">Full screen</span>

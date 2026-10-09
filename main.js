@@ -84,6 +84,7 @@ function openGdriveSetup() {
   if (gdriveSetupWindow) { gdriveSetupWindow.focus(); return; }
   gdriveSetupWindow = new BrowserWindow({
     width: 440, height: 360, autoHideMenuBar: true, resizable: false,
+    icon: path.join(__dirname, 'icon.png'),
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false }
   });
   gdriveSetupWindow.loadFile(path.join(__dirname, 'gdrive-setup.html'));
@@ -190,6 +191,7 @@ ipcMain.on('OPEN_EDITOR', (event, data) => {
     minHeight: bounds.minHeight,
     center: bounds.center,
     autoHideMenuBar: true,
+    icon: path.join(__dirname, 'icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
