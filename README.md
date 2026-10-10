@@ -116,9 +116,10 @@ J'Snaps brings the seamless "Lightshot" experience to your desktop. With a singl
 3. Create credentials → **OAuth client ID** → application type **Desktop app**.
 4. Copy `share/gdrive-config.example.json` to `share/gdrive-config.json` and enter the Client ID and secret, then rebuild. See [Technical Documentation](docs/TECHNICAL.md) for full setup instructions.
 
-## Privacy
+## Privacy & Terms
 
-Please review our [Privacy Policy](PRIVACY.md) for details on how permissions, local data encryption, and cloud sharing are handled.
+- [Privacy Policy](PRIVACY.md) — Details on permissions, local data encryption, and cloud sharing.
+- [Terms of Service](TERMS.md) — Acceptable use and service terms for J'Snaps.
 
 ## Tech Stack
 
