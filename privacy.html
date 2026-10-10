@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - J'Snaps</title>
+  <link rel="icon" href="favicon.ico">
+  <meta name="description" content="Privacy Policy for J'Snaps desktop application and Google Drive integration.">
+  <style>
+    :root {
+      --bg: #07101F;
+      --card-bg: #0D1B2A;
+      --text: #F7F3E9;
+      --text-muted: #A3B1C6;
+      --border: #1B263B;
+      --accent-coastal: #4EC5CC;
+      --accent-gold: #E8B923;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      padding: 0;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 16, 31, 0.95);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-left: 20px;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: var(--accent-coastal);
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 24px 60px 24px;
+    }
+    h1 {
+      font-size: 2.25rem;
+      margin-bottom: 8px;
+      color: #FFFFFF;
+    }
+    .last-updated {
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: var(--accent-coastal);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin: 18px 0 8px 0;
+      color: #FFFFFF;
+    }
+    p, ul {
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    ul {
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    strong {
+      color: var(--text);
+    }
+    code {
+      background: #1B263B;
+      color: var(--accent-gold);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-family: monospace;
+    }
+    a {
+      color: var(--accent-coastal);
+      text-decoration: underline;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a href="index.html" class="brand">
+        <img src="icon.png" alt="J'Snaps Logo">
+        <span>J'Snaps</span>
+      </a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="privacy.html" class="active">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="https://github.com/rjay1018/Jsnaps" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Privacy Policy</h1>
+    <div class="last-updated">Last Updated: October 11, 2026</div>
+
+    <div class="card">
+      <h2>1. Overview & Core Principles</h2>
+      <p>This Privacy Policy describes how <strong>J'Snaps</strong> ("we", "our", or "the application") handles user data. J'Snaps is a native desktop screen capture and annotation tool designed with strict privacy and security standards:</p>
+      <ul>
+        <li><strong>Zero Telemetry:</strong> J'Snaps does not collect, log, track, or sell your personal data, screen contents, usage habits, or analytics.</li>
+        <li><strong>Local-First Processing:</strong> All screenshots, drawings, crops, and annotations are rendered and processed solely on your local computer. Nothing leaves your machine unless you explicitly choose to upload an image.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>2. Google Drive API & User Data Handling</h2>
+      <p>J'Snaps provides an optional feature allowing users to upload screenshots directly to their own Google Drive account to generate shareable links.</p>
+
+      <h3>Requested Google OAuth Scope</h3>
+      <p>J'Snaps requests only the following single Google API permission:</p>
+      <p><code>https://www.googleapis.com/auth/drive.file</code></p>
+      <p><strong>Per-File Access Only:</strong> This restricted scope allows J'Snaps to view, create, and manage <em>only the specific files and folders that were created by J'Snaps itself</em> (specifically, the <code>JSnaps</code> folder in your Drive). J'Snaps <strong>cannot</strong> read, view, list, modify, or delete any of your other existing Google Drive files, photos, or documents.</p>
+
+      <h3>How Google User Data is Handled</h3>
+      <ul>
+        <li><strong>Direct Client-to-API Communication:</strong> All data transfers occur directly between the local J'Snaps client on your device and Google's official API servers (<code>googleapis.com</code>). Data never passes through or touches any intermediate third-party proxy or developer server.</li>
+        <li><strong>Local Credential Encryption:</strong> Your OAuth refresh token is stored strictly on your local device and encrypted using Electron's <code>safeStorage</code> API (backed by Windows DPAPI). It is never transmitted to us or any third party.</li>
+        <li><strong>No Selling of User Data:</strong> We never sell, rent, or monetize your personal information or Google user data.</li>
+        <li><strong>No AI Model Training:</strong> Google user data accessed by J'Snaps is never used to train, develop, or improve generalized machine learning or artificial intelligence models.</li>
+      </ul>
+
+      <h3>Google API Services User Data Policy Compliance</h3>
+      <p>J'Snaps' use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+    </div>
+
+    <div class="card">
+      <h2>3. Alternative Public Sharing (Catbox)</h2>
+      <p>If you choose to use <strong>Catbox</strong> as your share host (the zero-login default):</p>
+      <ul>
+        <li>Images you explicitly choose to share are uploaded to Catbox (<code>catbox.moe</code>) as public files accessible via the generated URL.</li>
+        <li>We strongly recommend using J'Snaps' built-in <strong>Blur / Redact tool</strong> (hotkey <code>B</code>) to obscure passwords, emails, and sensitive details prior to sharing links publicly.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>4. User Control & Data Deletion</h2>
+      <ul>
+        <li><strong>Revoke In-App:</strong> You can disconnect your Google account from J'Snaps at any time by selecting <strong>"Sign out of Google Drive"</strong> in the desktop system tray menu. This immediately revokes the OAuth token with Google and purges all credentials from your computer.</li>
+        <li><strong>Revoke via Google:</strong> You can manage and revoke application permissions at any time via your Google Account Security Dashboard at <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">https://myaccount.google.com/permissions</a>.</li>
+        <li><strong>Deleting Uploaded Files:</strong> Because all files uploaded via Google Drive reside directly in your own Google Drive storage under the <code>JSnaps</code> folder, you retain 100% control to view, organize, or permanently delete them at any time from your Google Drive interface.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>5. Contact Us</h2>
+      <p>If you have any questions or feedback regarding this Privacy Policy or your data, please contact the maintainer:</p>
+      <ul>
+        <li><strong>Developer:</strong> Rjay Lopez</li>
+        <li><strong>Email:</strong> <a href="mailto:rjay1018@gmail.com">rjay1018@gmail.com</a></li>
+        <li><strong>GitHub Project:</strong> <a href="https://github.com/rjay1018/Jsnaps" target="_blank" rel="noopener">https://github.com/rjay1018/Jsnaps</a></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 J'Snaps. All rights reserved. &bull; <a href="terms.html">Terms of Service</a> &bull; <a href="privacy.html">Privacy Policy</a></p>
+  </footer>
+</body>
+</html>
