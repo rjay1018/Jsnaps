@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service - J'Snaps</title>
+  <link rel="icon" href="favicon.ico">
+  <meta name="description" content="Terms of Service for J'Snaps desktop application.">
+  <style>
+    :root {
+      --bg: #07101F;
+      --card-bg: #0D1B2A;
+      --text: #F7F3E9;
+      --text-muted: #A3B1C6;
+      --border: #1B263B;
+      --accent-coastal: #4EC5CC;
+      --accent-gold: #E8B923;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      padding: 0;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 16, 31, 0.95);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-left: 20px;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: var(--accent-coastal);
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 24px 60px 24px;
+    }
+    h1 {
+      font-size: 2.25rem;
+      margin-bottom: 8px;
+      color: #FFFFFF;
+    }
+    .last-updated {
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: var(--accent-coastal);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    p, ul {
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    ul {
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    strong {
+      color: var(--text);
+    }
+    a {
+      color: var(--accent-coastal);
+      text-decoration: underline;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a href="index.html" class="brand">
+        <img src="icon.png" alt="J'Snaps Logo">
+        <span>J'Snaps</span>
+      </a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html" class="active">Terms of Service</a>
+        <a href="https://github.com/rjay1018/Jsnaps" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Terms of Service</h1>
+    <div class="last-updated">Last Updated: October 11, 2026</div>
+
+    <div class="card">
+      <h2>1. Acceptance of Terms</h2>
+      <p>Welcome to <strong>J'Snaps</strong>. By installing, copying, or using the J'Snaps desktop application, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please uninstall and discontinue use of the application.</p>
+    </div>
+
+    <div class="card">
+      <h2>2. Description of Application</h2>
+      <p>J'Snaps is an open-source, local-first screen capture and image annotation tool designed for Windows. It provides features including instant screen freezing, pixel-level area selection, drawing tools, blur/redact tools, and voluntary cloud sharing to third-party services (such as Catbox and user-authenticated Google Drive).</p>
+    </div>
+
+    <div class="card">
+      <h2>3. Intellectual Property and Content Ownership</h2>
+      <ul>
+        <li><strong>Your Intellectual Property:</strong> You retain complete, unrestricted ownership of all screenshots, annotations, and media created using J'Snaps. J'Snaps does not claim any ownership rights over your captured content.</li>
+        <li><strong>Your Responsibility:</strong> You are solely responsible for any content you capture, annotate, or share using third-party hosting services.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>4. Acceptable Use</h2>
+      <p>You agree not to use J'Snaps to:</p>
+      <ul>
+        <li>Capture, upload, or distribute illegal, infringing, defamatory, or abusive content.</li>
+        <li>Violate the intellectual property, privacy, or legal rights of any third party.</li>
+        <li>Disrupt, overload, or abuse third-party APIs (including Google APIs or Catbox hosting).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>5. Third-Party Integrations</h2>
+      <p>When you choose to integrate J'Snaps with Google Drive, you agree to comply with Google's applicable Terms of Service and user policies. J'Snaps interacts with Google APIs solely through the designated <code>drive.file</code> scope on your behalf. We have no responsibility for Google services or third-party storage uptime.</p>
+    </div>
+
+    <div class="card">
+      <h2>6. Disclaimer of Warranties & Limitation of Liability</h2>
+      <p>J'Snaps is provided <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> without warranty of any kind, whether express or implied. Under no circumstances shall the author or contributors be liable for any direct, indirect, incidental, or consequential damages resulting from the use or inability to use this software.</p>
+    </div>
+
+    <div class="card">
+      <h2>7. Contact</h2>
+      <p>If you have questions regarding these Terms, contact us via GitHub:</p>
+      <p><a href="https://github.com/rjay1018/Jsnaps/issues" target="_blank" rel="noopener">https://github.com/rjay1018/Jsnaps/issues</a></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 J'Snaps. All rights reserved. &bull; <a href="terms.html">Terms of Service</a> &bull; <a href="privacy.html">Privacy Policy</a></p>
+  </footer>
+</body>
+</html>

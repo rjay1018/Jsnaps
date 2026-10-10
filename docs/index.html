@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J'Snaps - Lightning-Fast Desktop Screenshot & Annotation Tool</title>
+  <link rel="icon" href="favicon.ico">
+  <meta name="description" content="J'Snaps is a native, silent desktop screenshot and image annotation tool for Windows with cloud sharing via Google Drive and Catbox.">
+  <style>
+    :root {
+      --bg: #07101F;
+      --card-bg: #0D1B2A;
+      --card-hover: #132742;
+      --text: #F7F3E9;
+      --text-muted: #A3B1C6;
+      --border: #1B263B;
+      --accent-coastal: #4EC5CC;
+      --accent-frost: #C9F2E7;
+      --accent-ocean: #2A78B8;
+      --accent-gold: #E8B923;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 16, 31, 0.95);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: var(--accent-coastal);
+    }
+    .hero {
+      max-width: 1000px;
+      margin: 60px auto 40px auto;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 30px;
+      background: rgba(78, 197, 204, 0.12);
+      color: var(--accent-coastal);
+      border: 1px solid rgba(78, 197, 204, 0.3);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    h1 {
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 18px;
+      color: #FFFFFF;
+      letter-spacing: -0.5px;
+    }
+    h1 span {
+      background: linear-gradient(135deg, var(--accent-frost), var(--accent-coastal), var(--accent-ocean));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px auto;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-coastal), var(--accent-ocean));
+      color: #07101F;
+      box-shadow: 0 6px 20px rgba(78, 197, 204, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(78, 197, 204, 0.45);
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: var(--card-hover);
+      border-color: var(--accent-coastal);
+    }
+    .hero-screenshot {
+      max-width: 960px;
+      margin: 0 auto 70px auto;
+      padding: 0 24px;
+    }
+    .hero-screenshot img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .section {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: all 0.2s ease;
+    }
+    .card:hover {
+      border-color: var(--accent-coastal);
+      transform: translateY(-3px);
+    }
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 80px;
+    }
+    footer a {
+      color: var(--accent-coastal);
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <img src="icon.png" alt="J'Snaps Logo">
+        <span>J'Snaps</span>
+      </a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="https://github.com/rjay1018/Jsnaps" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="badge">NATIVE WINDOWS SCREENSHOT TOOL</div>
+      <h1>Capture, Annotate & Share <br><span>In One Seamless Click</span></h1>
+      <p>Instant silent screen freeze with pixel-accurate area selection, rich markup tools, privacy blur, and direct cloud links.</p>
+      <div class="cta-buttons">
+        <a href="https://github.com/rjay1018/Jsnaps/releases/latest" class="btn btn-primary" target="_blank" rel="noopener">
+          <span>Download for Windows</span>
+        </a>
+        <a href="https://github.com/rjay1018/Jsnaps" class="btn btn-secondary" target="_blank" rel="noopener">
+          <span>View on GitHub</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="hero-screenshot">
+      <img src="screenshots/02_editor_overview.png" alt="J'Snaps Editor Overview">
+    </div>
+
+    <section class="section" id="features">
+      <div class="section-title">
+        <h2>Built for Speed, Privacy & Precision</h2>
+        <p>Everything you need for seamless bug reporting, documentation, and instant communication.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Global Hotkey (Ctrl+Shift+S)</h3>
+          <p>Press Ctrl+Shift+S anywhere to silently freeze your screen. Zero browser popups, zero lag.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">✏️</div>
+          <h3>Rich Annotation Suite</h3>
+          <p>Draw with freehand pen, straight lines, clean arrows, rectangles, ellipses, text labels, and step markers.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🌫️</div>
+          <h3>Blur & Redaction Tool</h3>
+          <p>Instantly redact confidential information, passwords, and sensitive emails with adjustable intensity.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <h3>Instant Cloud Sharing</h3>
+          <p>Generate shareable links via your own Google Drive account or fast public Catbox hosting with Ctrl+L.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <h3>Local-First & Private</h3>
+          <p>Your screenshots stay strictly on your local computer. No telemetry, no third-party tracking.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h3>Instant Clipboard Copy</h3>
+          <p>One-click copy to clipboard ready to paste into Slack, Teams, Notion, Jira, or GitHub.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 J'Snaps &bull; Developed by <a href="https://github.com/rjay1018" target="_blank" rel="noopener">Rjay Lopez</a></p>
+    <p style="margin-top: 8px;">
+      <a href="index.html">Home</a> &bull;
+      <a href="privacy.html">Privacy Policy</a> &bull;
+      <a href="terms.html">Terms of Service</a> &bull;
+      <a href="https://github.com/rjay1018/Jsnaps" target="_blank" rel="noopener">GitHub Repository</a>
+    </p>
+  </footer>
+</body>
+</html>
